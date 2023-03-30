@@ -1,0 +1,107 @@
+<html>
+    <meta charset="utf-8">
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Finance Calculator</title>
+       <link href="../static/financecalc.css"rel="stylesheet">
+        <script>
+            function ajax_request(){
+                var xmlhttp;
+                if(window.XMLHttpRequest){
+                    xmlhttp=new XMLHttpRequest();
+                }else{
+                    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+                }
+
+                xmlhttp.onreadystatechange=function (){
+                    if(xmlhttp.readyState==4 && xmlhttp.status==200){
+                        document.getElementById("result").innerHTML=xmlhttp.responseText;
+                    }
+                }
+
+                var S = document.getElementById("S").value;
+                var sigma = document.getElementById("sigma").value;
+                var r = document.getElementById("r").value;
+                var T = document.getElementById("T").value;
+                var K = document.getElementById("K").value;
+                var call_put = document.getElementById("call_put").value;
+
+                xmlhttp.open("GET", "/european/" + "S" + S + "sigma" + sigma + "r" + r + "T" + T + "K" + K + "call_put" + call_put + "/" , true);
+                xmlhttp.setRequestHeader("X-requested-with", "XMLHttpRequest");
+                xmlhttp.send();
+            }
+
+        </script>
+
+    </head>
+    <body>
+        <div class="container">
+            <div class="page-header">
+                <h1>Option Calculator</h1>
+            </div>
+            <div class="row">
+                <div>
+                    
+                </div>
+                <div id="myDiv" >
+                    <h3>Black Scholes Formula Input parameters(European): </h3>
+                    <div>
+                        <table class="table">
+                            
+                            <tr>
+                                <td>Stock Price: </td>
+                                <td><input id="S" value="100"><br></td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Volatility </td>
+                                <td><input id="sigma" value="0.2"><br></td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Risk Free Interest rate(r): </td>
+                                <td><input id="r" value="0.01"><br></td>
+                            </tr>
+                        
+                            <tr>
+                                <td>Time in years: </td>
+                                <td><input id="T" value="3"><br></td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Strike Price(K): </td>
+                                <td><input id="K" value="100"><br></td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Call(C) or Put(P): </td>
+                                <td><input id="call_put" value="C"><br></td>
+                            </tr>
+                            
+                            <tr>
+                                <td>
+                                    <button type="button" class="btn btn-primary" onclick="ajax_request()">European Option Price</button>
+                                </td>
+                                <td><span id="result"></span></td>
+                            </tr>
+                            
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+
+
+
+
+
+
+
+
+
+</html>
